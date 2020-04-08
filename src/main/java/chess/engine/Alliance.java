@@ -1,4 +1,6 @@
 package chess.engine;
 
-public class Alliance {
+public enum Alliance {
+    WHITE,
+    BLACK
 }
