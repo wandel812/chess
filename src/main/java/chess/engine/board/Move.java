@@ -7,9 +7,9 @@ public abstract class Move {
     final Piece piece;
     final int destinationCoordinate;
 
-    private Move(Board board,
-                Piece piece,
-                int destinationCoordinate) {
+    private Move(final Board board,
+                final Piece piece,
+                final int destinationCoordinate) {
         this.board = board;
         this.piece = piece;
         this.destinationCoordinate = destinationCoordinate;
