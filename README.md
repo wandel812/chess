@@ -1,2 +1,2 @@
-# chess
+#~~~~ chess
 chess game for university
