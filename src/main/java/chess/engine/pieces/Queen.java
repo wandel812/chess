@@ -23,18 +23,18 @@ public class Queen extends Piece {
         final List<Move> legalMoves = new ArrayList<>();
         for (final int candidateCoordinateOffset : CANDIDATE_MOVE_VECTOR_COORDINATES) {
             int candidateDestinationCoordinate = this.piecePosition + candidateCoordinateOffset;
-            while(BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)) {
-                if(isFirstColumnExclusion(this.piecePosition, candidateCoordinateOffset) ||
+            while (BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)) {
+                if (isFirstColumnExclusion(this.piecePosition, candidateCoordinateOffset) ||
                         isEighthColumnExclusion(this.piecePosition, candidateCoordinateOffset)) {
                     break;
                 }
                 final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
-                if(!candidateDestinationTile.isTileOccupied()) {
+                if (!candidateDestinationTile.isTileOccupied()) {
                     legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
                 } else {
                     final Piece pieceAtDestination = candidateDestinationTile.getPiece();
                     final Alliance pieceAlliance = pieceAtDestination.getPieceAlliance();
-                    if(this.pieceAlliance != pieceAlliance) {
+                    if (this.pieceAlliance != pieceAlliance) {
                         legalMoves.add(new Move.AttackMove(board,
                                 this,
                                 candidateDestinationCoordinate,
@@ -58,3 +58,4 @@ public class Queen extends Piece {
                 || (candidateOffset == 9));
     }
 }
+
