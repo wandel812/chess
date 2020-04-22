@@ -70,5 +70,8 @@ public class Knight extends Piece {
                 || (candidateOffset == -6) || (candidateOffset == -15));
     }
 
-
+    @Override
+    public String toString() {
+        return PieceType.KNIGHT.toString();
+    }
 }
