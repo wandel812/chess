@@ -2,6 +2,8 @@ package chess.engine.board;
 
 import chess.engine.Alliance;
 import chess.engine.pieces.*;
+import chess.engine.player.BlackPlayer;
+import chess.engine.player.WhitePlayer;
 import com.google.common.collect.ImmutableList;
 
 import java.util.*;
@@ -11,13 +13,17 @@ public class Board {
     private final Collection<Piece> whitePieces;
     private final Collection<Piece> blackPieces;
 
+    private final WhitePlayer whitePlayer;
+    private final BlackPlayer blackPlayer;
+
      private Board(Builder builder) {
          gameBoard = createGameBoard(builder);
          whitePieces = calculateActivePieces(gameBoard, Alliance.WHITE);
          blackPieces = calculateActivePieces(gameBoard, Alliance.BLACK);
-
          final Collection<Move> whiteStandardLegalMoves = calculateLegalMoves(whitePieces);
          final Collection<Move> blackStandardLegalMoves = calculateLegalMoves(blackPieces);
+         whitePlayer = new WhitePlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
+         blackPlayer = new BlackPlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
      }
 
     @Override
@@ -96,6 +102,14 @@ public class Board {
         builder.setNextMoveMaker(Alliance.WHITE);
 
         return builder.build();
+    }
+
+    public Collection<Piece> getBlackPieces() {
+         return blackPieces;
+    }
+
+    public Collection<Piece> getWhitePieces() {
+         return whitePieces;
     }
 
     public static class Builder {
