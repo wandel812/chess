@@ -14,7 +14,7 @@ import java.util.List;
 public class Bishop extends Piece {
     private final int[] CANDIDATE_MOVE_VECTOR_COORDINATES = {-9, -7, 7, 9};
 
-    public Bishop(int piecePosition, Alliance pieceAlliance) {
+    public Bishop(final int piecePosition, final Alliance pieceAlliance) {
         super(PieceType.BISHOP, piecePosition, pieceAlliance);
     }
 
@@ -46,6 +46,12 @@ public class Bishop extends Piece {
             }
         }
         return ImmutableList.copyOf(legalMoves);
+    }
+
+    @Override
+    public Bishop movePiece(final Move move) {
+        return new Bishop(move.getDestinationCoordinate(),
+                move.getMovedPiece().getPieceAlliance());
     }
 
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset) {

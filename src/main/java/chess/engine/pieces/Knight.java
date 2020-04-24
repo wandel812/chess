@@ -16,7 +16,7 @@ import static chess.engine.board.Move.*;
 public class Knight extends Piece {
     private final int[] CANDIDATE_MOVE_COORDINATE = {-17, -15, -10, -6, 6, 10, 15, 17};
 
-    public Knight(int piecePosition, Alliance pieceAlliance) {
+    public Knight(final int piecePosition, final Alliance pieceAlliance) {
         super(PieceType.KNIGHT, piecePosition, pieceAlliance);
     }
 
@@ -50,6 +50,12 @@ public class Knight extends Piece {
         }
 
         return ImmutableList.copyOf(legalMoves);
+    }
+
+    @Override
+    public Knight movePiece(final Move move) {
+        return new Knight(move.getDestinationCoordinate(),
+                move.getMovedPiece().getPieceAlliance());
     }
 
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset) {
