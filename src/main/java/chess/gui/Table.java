@@ -90,15 +90,15 @@ public class Table {
         }
 
         private void assignTileColor() {
-            if (BoardUtils.FIRST_ROW[tileId]
-                    || BoardUtils.THIRD_ROW[tileId]
-                    || BoardUtils.FIFTH_ROW[tileId]
-                    || BoardUtils.SEVENTH_ROW[tileId]) {
+            if (BoardUtils.EIGHTH_RANK[tileId]
+                    || BoardUtils.SIXTH_RANK[tileId]
+                    || BoardUtils.FOURTH_RANK[tileId]
+                    || BoardUtils.SECOND_RANK[tileId]) {
                 setBackground(tileId % 2 == 0 ? lightTileColor : darkTileColor);
-            } else if (BoardUtils.SECOND_ROW[tileId]
-                    || BoardUtils.FOURTH_ROW[tileId]
-                    || BoardUtils.SIXTH_ROW[tileId]
-                    || BoardUtils.EIGHTH_ROW[tileId]) {
+            } else if (BoardUtils.SEVENTH_RANK[tileId]
+                    || BoardUtils.FIFTH_RANK[tileId]
+                    || BoardUtils.THIRD_RANK[tileId]
+                    || BoardUtils.FIRST_RANK[tileId]) {
                 setBackground(tileId % 2 == 0 ? darkTileColor : lightTileColor );
             }
 
