@@ -1,5 +1,6 @@
 package chess.gui;
 
+import chess.engine.board.Board;
 import chess.engine.board.BoardUtils;
 
 import javax.swing.*;
@@ -89,6 +90,8 @@ public class Table {
             validate();
         }
 
+
+
         private void assignTileColor() {
             if (BoardUtils.EIGHTH_RANK[tileId]
                     || BoardUtils.SIXTH_RANK[tileId]
@@ -104,5 +107,4 @@ public class Table {
 
         }
     }
-
 }
