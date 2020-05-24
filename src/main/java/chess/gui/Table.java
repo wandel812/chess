@@ -121,10 +121,7 @@ public class Table {
         });
 
         preferencesMenu.add(legalMovesHighlighterCheckbox);
-
         return preferencesMenu;
-
-
     }
 
     private class BoardPanel extends JPanel {
@@ -331,8 +328,5 @@ public class Table {
         public boolean removeMove(final Move move) {
             return moves.remove(move);
         }
-
-
-
     }
 }

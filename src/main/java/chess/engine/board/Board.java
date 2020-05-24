@@ -19,10 +19,13 @@ public class Board {
     private final BlackPlayer blackPlayer;
     private final Player currentPlayer;
 
+    private final Pawn enPassantPawn;
+
      private Board(final Builder builder) {
          gameBoard = createGameBoard(builder);
          whitePieces = calculateActivePieces(gameBoard, Alliance.WHITE);
          blackPieces = calculateActivePieces(gameBoard, Alliance.BLACK);
+         enPassantPawn = builder.enPassantPawn;
          final Collection<Move> whiteStandardLegalMoves = calculateLegalMoves(whitePieces);
          final Collection<Move> blackStandardLegalMoves = calculateLegalMoves(blackPieces);
          whitePlayer = new WhitePlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
@@ -133,6 +136,10 @@ public class Board {
                 whitePlayer.getLegalMoves(),
                 blackPlayer.getLegalMoves()
         ));
+    }
+
+    public Pawn getEnPassantPawn() {
+        return enPassantPawn;
     }
 
     public static class Builder {

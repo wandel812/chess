@@ -4,6 +4,8 @@ import chess.engine.Alliance;
 import chess.engine.board.Board;
 import chess.engine.board.BoardUtils;
 import chess.engine.board.Move;
+import chess.engine.board.Move.MajorAttackMove;
+import chess.engine.board.Move.MajorMove;
 import chess.engine.board.Tile;
 import com.google.common.collect.ImmutableList;
 
@@ -38,12 +40,12 @@ public class King extends Piece {
             if (BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)) {
                 final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
                 if (!candidateDestinationTile.isTileOccupied()) {
-                    legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
+                    legalMoves.add(new MajorMove(board, this, candidateDestinationCoordinate));
                 } else {
                     final Piece pieceAtDestination = candidateDestinationTile.getPiece();
                     final Alliance pieceAlliance = pieceAtDestination.getPieceAlliance();
                     if (this.pieceAlliance != pieceAlliance) {
-                        legalMoves.add(new Move.AttackMove(board,
+                        legalMoves.add(new MajorAttackMove(board,
                                 this,
                                 candidateDestinationCoordinate,
                                 pieceAtDestination));

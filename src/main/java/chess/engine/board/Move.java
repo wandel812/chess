@@ -248,6 +248,62 @@ public abstract class Move {
         }
     }
 
+    public static class PawnPromotion extends Move {
+        final Move decoratedMove;
+        final Pawn promotedPawn;
+        public PawnPromotion(final Move decoratedMove) {
+            super(decoratedMove.getBoard(), decoratedMove.getMovedPiece(), decoratedMove.getDestinationCoordinate());
+            this.decoratedMove = decoratedMove;
+            this.promotedPawn = (Pawn) decoratedMove.getMovedPiece();
+        }
+
+        @Override
+        public int hashCode() {
+            return  decoratedMove.hashCode() + (31 * promotedPawn.hashCode());
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            return this == other || other instanceof PawnPromotion && (super.equals(other));
+        }
+
+        @Override
+        public Board execute() {
+            final Board pawnMovedBoard = decoratedMove.execute();
+            final Board.Builder builder = new Builder();
+            for(final Piece piece : pawnMovedBoard.currentPlayer().getActivePieces()) {
+                if(!promotedPawn.equals(piece)) {
+                    builder.setPiece(piece);
+                }
+            }
+            for(final Piece piece : pawnMovedBoard.currentPlayer().getOpponent().getActivePieces()) {
+                    builder.setPiece(piece);
+            }
+            builder.setPiece(promotedPawn.getPromotionPiece().movePiece(this));
+            builder.setMoveMaker(pawnMovedBoard.currentPlayer().getAlliance());
+            return builder.build();
+        }
+
+        @Override
+        public boolean isAttack() {
+            return decoratedMove.isAttack();
+        }
+
+        @Override
+        public Piece getAttackedPiece() {
+            return decoratedMove.getAttackedPiece();
+        }
+
+        @Override
+        public String toString() {
+            return "";
+        }
+    }
+
+    private Board getBoard() {
+        return board;
+    }
+
     public static final class PawnJump extends Move {
         public PawnJump(final Board board,
                         final Piece movedPiece,
