@@ -11,12 +11,8 @@ import com.google.common.collect.Lists;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,11 +43,17 @@ public class Table {
 
     private final static Color lightTileColor = Color.decode("#FFFACD");
     private final static Color darkTileColor = Color.decode("#593E1A");
-    private static String defaultPieceImagesPath = "src/main/resources/pieceIcon/";
     private boolean highlightLegalMoves = false;
+    public static final String PieceImagesDirResourceName = "pieceIcon";
+    public static final String HighlightImageDirResourceName = "misc";
 
     public Table() {
         gameFrame = new JFrame("Chess");
+        gameFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(WindowEvent winEvt) {
+                System.exit(0);
+            }
+        });
         gameFrame.setLayout(new BorderLayout());
         final JMenuBar tableMenuBar = createTableMenuBar();
         gameFrame.setJMenuBar(tableMenuBar);
@@ -210,12 +212,12 @@ public class Table {
             removeAll();
             if (board.getTile(tileId).isTileOccupied()) {
                 String suffixPath
-                        =  board.getTile(tileId).getPiece().getPieceAlliance().toString().substring(0, 1)
+                        = "/" + board.getTile(tileId).getPiece().getPieceAlliance().toString().substring(0, 1)
                         + board.getTile(tileId).getPiece().toString()
                         + ".gif";
                 try {
                     final BufferedImage image
-                            = ImageIO.read(new File(defaultPieceImagesPath + suffixPath));
+                            = ImageIO.read(ClassLoader.getSystemResource(PieceImagesDirResourceName + suffixPath));
                     add(new JLabel(new ImageIcon(image)));
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -228,7 +230,12 @@ public class Table {
                 for (final Move move : pieceLegalMoves(board)) {
                     if(move.getDestinationCoordinate() == this.tileId) {
                         try {
-                            add(new JLabel(new ImageIcon(ImageIO.read(new File("src/main/resources/misc/green_dot.png")))));
+                            add(new JLabel(
+                                    new ImageIcon(
+                                            ImageIO.read(
+                                                    ClassLoader.getSystemResource(
+                                                            HighlightImageDirResourceName + "/green_dot.png")))));
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
